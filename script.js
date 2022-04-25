@@ -9,13 +9,13 @@ const body = document.querySelector("body");
 let apiQuotes = [];
 
 // Show Loading
-function loading() {
+function showLoadingSpinner() {
   quoteContainer.classList.add("hidden");
   loader.hidden = false;
 }
 
 // Hide Loading
-function complete() {
+function hideLoadingSpinner() {
   loader.hidden = true;
   quoteContainer.classList.remove("hidden");
   // quoteContainer.hidden = false;
@@ -23,7 +23,7 @@ function complete() {
 
 // Show New Quote
 function newQuote() {
-  loading();
+  showLoadingSpinner();
   // Pick a random code locally
   // const quote = localQuotes[Math.floor(Math.random() * localQuotes.length)];
   // return quote;
@@ -40,7 +40,7 @@ function newQuote() {
 
   // Set Quote, Hide Loader
   quoteText.textContent = quote.text;
-  complete();
+  hideLoadingSpinner();
   // return quote;
 }
 
@@ -48,7 +48,7 @@ function newQuote() {
 
 async function getQuotes() {
   loadImage();
-  loading();
+  showLoadingSpinner();
   const apiUrl = "https://type.fit/api/quotes";
   try {
     const response = await fetch(apiUrl);
@@ -56,6 +56,7 @@ async function getQuotes() {
     newQuote(apiQuotes);
   } catch (err) {
     // Catch Error Here
+    // getQuotes();
     console.error(err);
   }
 }
